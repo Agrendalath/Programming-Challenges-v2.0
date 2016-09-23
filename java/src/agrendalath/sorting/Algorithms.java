@@ -18,6 +18,7 @@ class Algorithms {
         return array;
     }
 
+    @SuppressWarnings("PMD")
     static <T extends Number & Comparable<T>> T[] shuffleSort(T[] array) {
         boolean sorted;
         while (true) {
@@ -35,6 +36,7 @@ class Algorithms {
         return array;
     }
 
+    @SuppressWarnings("PMD")
     static <T extends Number & Comparable<T>> T[] stupidSort(T[] array) {
         for (int i = 0; i < array.length - 1; ++i) {
             if (array[i].compareTo(array[i + 1]) == 1) {
@@ -45,6 +47,7 @@ class Algorithms {
         return array;
     }
 
+    @SuppressWarnings("PMD")
     static <T extends Number & Comparable<T>> T[] bubbleSort(T[] array) {
         boolean changed = true;
         while (changed) {
@@ -79,6 +82,7 @@ class Algorithms {
             doTheQuickSort(array, j + 1, high);
     }
 
+    @SuppressWarnings("PMD")
     static <T extends Number & Comparable<T>> T[] quicksort(T[] array) {
         if (array.length != 0)
             doTheQuickSort(array, 0, array.length - 1);
@@ -101,6 +105,7 @@ class Algorithms {
         System.arraycopy(helper, low, array, low, high + 1 - low);
     }
 
+    @SuppressWarnings("PMD")
     static <T extends Number & Comparable<T>> T[] mergeSort(T[] array) {
         T[] helper = array.clone();
         doTheMergeSort(array, helper, 0, array.length - 1);

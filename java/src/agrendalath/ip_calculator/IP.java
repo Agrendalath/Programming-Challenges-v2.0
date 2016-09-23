@@ -35,6 +35,7 @@ class IP {
         return result;
     }
 
+    @SuppressWarnings("PMD")
     long getAddress() {
         return address;
     }
@@ -44,6 +45,7 @@ class IP {
         return addressToIP(address);
     }
 
+    @SuppressWarnings("PMD")
     static String addressToIP(Long address) {
         StringBuilder sb = new StringBuilder();
         for (int i = 24; i >= 0; i -= 8) {
