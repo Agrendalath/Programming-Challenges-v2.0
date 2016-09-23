@@ -52,6 +52,6 @@ public class BMICalculator {
 
     public static void main(String[] args) {
         double bmi = countBMI(getUserInput("weight", "kg"), getUserInput("height", "m"));
-        System.out.println("Your countBMI equals " + new DecimalFormat("#0.00").format(bmi) + ", which means your weight category is: " + classify(bmi) + ".");
+        System.out.println("Your BMI equals " + new DecimalFormat("#0.00").format(bmi) + ", which means your weight category is: " + classify(bmi) + ".");
     }
 }
