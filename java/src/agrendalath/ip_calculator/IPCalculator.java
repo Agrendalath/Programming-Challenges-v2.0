@@ -21,23 +21,23 @@ public class IPCalculator {
         return scanner.next();
     }
 
-    String getNetworkAddress() {
+    private String getNetworkAddress() {
         return IP.addressToIP(ip.getAddress() & subnetMask.getAddress());
     }
 
-    String getBroadcastAddress() {
+    private String getBroadcastAddress() {
         return IP.addressToIP(ip.getAddress() | ~subnetMask.getAddress());
     }
 
-    String getFirstAddress() {
+    private String getFirstAddress() {
         return IP.addressToIP(new IP(getNetworkAddress()).getAddress() + 1);
     }
 
-    String getLastAddress() {
+    private String getLastAddress() {
         return IP.addressToIP(new IP(getBroadcastAddress()).getAddress() - 1);
     }
 
-    long getNumberOfAvailableAddresses() {
+    private long getNumberOfAvailableAddresses() {
         long result = (1L << Long.numberOfTrailingZeros(subnetMask.getAddress())) - 2L;
         return result > 0 ? result : 1;
     }

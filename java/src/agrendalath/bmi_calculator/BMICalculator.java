@@ -19,14 +19,14 @@ public class BMICalculator {
         table.put(new Pair(40, Double.MAX_VALUE), "Obese Class III (Very severely obese)");
     }
 
-    static double countBMI(double weight, double height) {
+    private static double countBMI(double weight, double height) {
         if (weight < 0 || height < 0)
             throw new IllegalArgumentException("Weight nor height cannot have negative value.");
 
         return weight / (height * height);
     }
 
-    static String classify(double bmi) {
+    private static String classify(double bmi) {
         for (Map.Entry<Pair, String> entry : table.entrySet()) {
             if (entry.getKey().lower <= bmi && bmi < entry.getKey().upper) {
                 return entry.getValue();
