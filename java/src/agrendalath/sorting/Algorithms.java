@@ -60,9 +60,11 @@ class Algorithms {
     }
 
     private static <T extends Number & Comparable<T>> void doTheQuickSort(T[] array, int low, int high) {
-        int j, half = (low + high) / 2;
+        int half = (low + high) / 2;
         T pivot = array[half];
         array[half] = array[high];
+
+        int j;
         for (int i = j = low; i < high; ++i)
             if (array[i].compareTo(pivot) == -1) {
                 swap(array, i, j);
@@ -84,7 +86,9 @@ class Algorithms {
     }
 
     private static <T extends Number & Comparable<T>> void doTheMergeSort(T[] array, T[] helper, int low, int high) {
-        int half = (low + high + 1) / 2, left = low, right = half;
+        int half = (low + high + 1) / 2;
+        int left = low;
+        int right = half;
 
         if (half - low > 1)
             doTheMergeSort(array, helper, low, half - 1);

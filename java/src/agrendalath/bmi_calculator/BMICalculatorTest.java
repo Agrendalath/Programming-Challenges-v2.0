@@ -11,21 +11,21 @@ public class BMICalculatorTest {
     public ExpectedException expectedException = ExpectedException.none();
 
     @Test
-    public void BMIException() throws Exception {
+    public void testBMIException() throws Exception {
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage("Weight nor height cannot have negative value.");
 
-        BMICalculator.BMI(100, -1);
+        BMICalculator.countBMI(100, -1);
     }
 
     @Test
-    public void BMI() {
-        assertEquals(23.529411764705884, BMICalculator.BMI(68, 1.70), 0.0001);
+    public void testBMI() {
+        assertEquals(23.529411764705884, BMICalculator.countBMI(68, 1.70), 0.0001);
     }
 
     @Test
-    public void classify() {
-        assertEquals("Normal (healthy weight)", BMICalculator.classify(BMICalculator.BMI(68, 1.70)));
+    public void testClassify() {
+        assertEquals("Normal (healthy weight)", BMICalculator.classify(BMICalculator.countBMI(68, 1.70)));
     }
 
 }

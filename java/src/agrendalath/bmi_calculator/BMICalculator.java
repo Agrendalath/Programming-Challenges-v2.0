@@ -19,7 +19,7 @@ public class BMICalculator {
         table.put(new Pair(40, Double.MAX_VALUE), "Obese Class III (Very severely obese)");
     }
 
-    static double BMI(double weight, double height) {
+    static double countBMI(double weight, double height) {
         if (weight < 0 || height < 0)
             throw new IllegalArgumentException("Weight nor height cannot have negative value.");
 
@@ -51,7 +51,7 @@ public class BMICalculator {
     }
 
     public static void main(String[] args) {
-        double bmi = BMI(getUserInput("weight", "kg"), getUserInput("height", "m"));
-        System.out.println("Your BMI equals " + new DecimalFormat("#0.00").format(bmi) + ", which means your weight category is: " + classify(bmi) + ".");
+        double bmi = countBMI(getUserInput("weight", "kg"), getUserInput("height", "m"));
+        System.out.println("Your countBMI equals " + new DecimalFormat("#0.00").format(bmi) + ", which means your weight category is: " + classify(bmi) + ".");
     }
 }
