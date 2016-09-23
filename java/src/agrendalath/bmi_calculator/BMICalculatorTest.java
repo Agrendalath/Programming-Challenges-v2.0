@@ -8,6 +8,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 public class BMICalculatorTest {
     @Rule
@@ -25,6 +26,7 @@ public class BMICalculatorTest {
         } catch (InvocationTargetException e) {
             throw e.getTargetException();
         }
+        fail("Exception not thrown");
     }
 
     @Test

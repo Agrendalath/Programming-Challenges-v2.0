@@ -5,6 +5,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 public class IPTest {
     @Rule
@@ -16,6 +17,7 @@ public class IPTest {
         expectedException.expectMessage("IP address must consist of exactly 4 octets.");
 
         new IP("random");
+        fail("Exception not thrown");
     }
 
     @Test
@@ -24,6 +26,7 @@ public class IPTest {
         expectedException.expectMessage("One octet cannot have more than 1 byte.");
 
         new IP("192.168.256.1");
+        fail("Exception not thrown");
     }
 
     @Test
@@ -32,6 +35,7 @@ public class IPTest {
         expectedException.expectMessage("Octet cannot have negative value.");
 
         new IP("192.168.255.-11");
+        fail("Exception not thrown");
     }
 
     @Test
@@ -49,6 +53,7 @@ public class IPTest {
         Short[] address = {192, 168, 256, 1};
 
         new IP(address);
+        fail("Exception not thrown");
     }
 
     @Test
@@ -58,6 +63,7 @@ public class IPTest {
         Long[] address = {192L, 168L, 254L, -1L};
 
         new IP(address);
+        fail("Exception not thrown");
     }
 
     @Test
