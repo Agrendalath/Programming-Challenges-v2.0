@@ -13,13 +13,6 @@ class DST implements Serializable {
         map = toMap();
     }
 
-    private class Node implements Serializable {
-        char value;
-        Node parent;
-        Node left;
-        Node right;
-    }
-
     private void addKey(char key, String code) {
         key = Character.toUpperCase(key);
         if (code.length() == 0)
@@ -28,20 +21,18 @@ class DST implements Serializable {
         Node currentNode = root;
         for (char sign : code.toCharArray()) {
             if (sign == '.') {
-                if (currentNode.left == null) {
-                    currentNode.left = new Node();
-                    currentNode.left.parent = currentNode;
-                }
-                currentNode = currentNode.left;
+                if (currentNode.getLeft() == null)
+                    currentNode.setLeft(new Node());
+
+                currentNode = currentNode.getLeft();
             } else {
-                if (currentNode.right == null) {
-                    currentNode.right = new Node();
-                    currentNode.right.parent = currentNode;
-                }
-                currentNode = currentNode.right;
+                if (currentNode.getRight() == null)
+                    currentNode.setRight(new Node());
+
+                currentNode = currentNode.getRight();
             }
         }
-        currentNode.value = key;
+        currentNode.setValue(key);
     }
 
     private char getKey(String code) {
@@ -52,12 +43,12 @@ class DST implements Serializable {
 
         for (char sign : code.toCharArray()) {
             if (sign == '.')
-                currentNode = currentNode.left;
+                currentNode = currentNode.getLeft();
             else
-                currentNode = currentNode.right;
+                currentNode = currentNode.getRight();
         }
 
-        return currentNode.value;
+        return currentNode.getValue();
     }
 
     String translateToText(String message) {
@@ -94,10 +85,10 @@ class DST implements Serializable {
     private void addKeyToMap(Map<Character, String> map, Node node, String sequence) {
         if (node != null) {
             if (node != root)
-                map.put(node.value, sequence);
+                map.put(node.getValue(), sequence);
 
-            addKeyToMap(map, node.left, sequence + ".");
-            addKeyToMap(map, node.right, sequence + "-");
+            addKeyToMap(map, node.getLeft(), sequence + ".");
+            addKeyToMap(map, node.getRight(), sequence + "-");
         }
     }
 
