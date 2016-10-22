@@ -1,26 +1,27 @@
 package agrendalath.morse_code;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-class DST {
+class DST implements Serializable {
+    private final Map<Character, String> map;
+    private Node root = new Node();
+
     DST() {
         createTree();
         map = toMap();
     }
 
-    private final Map<Character, String> map;
-
-    private class Node {
+    private class Node implements Serializable {
         char value;
         Node parent;
         Node left;
         Node right;
     }
 
-    private Node root = new Node();
-
     private void addKey(char key, String code) {
+        key = Character.toUpperCase(key);
         if (code.length() == 0)
             throw new IllegalArgumentException("Code cannot be empty.");
 
@@ -60,22 +61,24 @@ class DST {
     }
 
     String translateToText(String message) {
+        message = message.toUpperCase();
         if (message.length() == 0)
             throw new IllegalArgumentException("Sequence cannot be empty.");
 
         StringBuilder stringBuilder = new StringBuilder();
 
-        for (String word : message.split("\\|")) {
+        for (String word : message.split("\\| ")) {
             for (String letter : word.split(" ")) {
                 stringBuilder.append(getKey(letter));
             }
             stringBuilder.append(" ");
         }
 
-        return stringBuilder.toString();
+        return stringBuilder.substring(0, stringBuilder.length() - 1);
     }
 
     String translateToMorseCode(String message) {
+        message = message.toUpperCase();
         StringBuilder stringBuilder = new StringBuilder();
         for (char letter : message.toCharArray()) {
             if (letter == ' ')
@@ -85,7 +88,7 @@ class DST {
 
             stringBuilder.append(" ");
         }
-        return stringBuilder.toString();
+        return stringBuilder.substring(0, stringBuilder.length() - 1);
     }
 
     private void addKeyToMap(Map<Character, String> map, Node node, String sequence) {
