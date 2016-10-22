@@ -76,28 +76,30 @@ class GUI {
                 buttons[i][j].addMouseListener(new MouseListener() {
                     @Override
                     public void mouseClicked(MouseEvent mouseEvent) {
-                        if (SwingUtilities.isLeftMouseButton(mouseEvent)) {
-                            if (board.reveal(new Point(x, y)))
-                                panel.repaint();
-                        } else if (SwingUtilities.isRightMouseButton(mouseEvent))
-                            if (board.flag(new Point(x, y)))
-                                panel.repaint();
+                        if (SwingUtilities.isLeftMouseButton(mouseEvent) && board.reveal(new Point(x, y))) {
+                            panel.repaint();
+                        } else if (SwingUtilities.isRightMouseButton(mouseEvent) && board.flag(new Point(x, y)))
+                            panel.repaint();
                     }
 
                     @Override
                     public void mousePressed(MouseEvent mouseEvent) {
+                        // Method forced by MouseListener interface.
                     }
 
                     @Override
                     public void mouseReleased(MouseEvent mouseEvent) {
+                        // Method forced by MouseListener interface.
                     }
 
                     @Override
                     public void mouseEntered(MouseEvent mouseEvent) {
+                        // Method forced by MouseListener interface.
                     }
 
                     @Override
                     public void mouseExited(MouseEvent mouseEvent) {
+                        // Method forced by MouseListener interface.
                     }
                 });
 
