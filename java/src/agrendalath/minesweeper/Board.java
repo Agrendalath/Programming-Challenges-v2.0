@@ -15,16 +15,6 @@ public class Board {
     private boolean gameOver = false;
     private boolean gameWon = false;
 
-    class Cell {
-        EnumSet<State> state;
-        byte adjacentBombs;
-        byte adjacentFlags;
-
-        Cell(EnumSet<State> state) {
-            this.state = state;
-        }
-    }
-
     Board(int width, int height, int bombs) {
         BOARD_SIZE = new Dimension(width, height);
         BOMBS = bombs;
@@ -41,11 +31,11 @@ public class Board {
     }
 
     private void incrementNeighbours(Point point) {
-        --cells[point.x][point.y].adjacentBombs;
+        cells[point.x][point.y].increaseAdjacentBombs(-1);
         for (int i = point.x - 1; i <= point.x + 1; ++i)
             for (int j = point.y - 1; j <= point.y + 1; ++j)
                 if (isValidCell(new Point(i, j)))
-                    ++cells[i][j].adjacentBombs;
+                    cells[i][j].increaseAdjacentBombs(1);
     }
 
     private void generateBoard() {
@@ -53,10 +43,10 @@ public class Board {
         for (int i = 0; i < BOMBS; ++i) {
             int x = random.nextInt(BOARD_SIZE.width);
             int y = random.nextInt(BOARD_SIZE.height);
-            if (cells[x][y].state.contains(State.BOMB))
+            if (cells[x][y].containsState(State.BOMB))
                 --i;
             else {
-                cells[x][y].state.add(State.BOMB);
+                cells[x][y].addState(State.BOMB);
                 incrementNeighbours(new Point(x, y));
             }
         }
@@ -73,7 +63,7 @@ public class Board {
 
         for (int i = 0; i < BOARD_SIZE.width; ++i)
             for (int j = 0; j < BOARD_SIZE.height; ++j)
-                if (cells[i][j].state.contains(State.REVEALED) && cells[i][j].state.contains(State.BOMB))
+                if (cells[i][j].containsState(State.REVEALED) && cells[i][j].containsState(State.BOMB))
                     won = false;
 
         gameWon = won;
@@ -94,29 +84,29 @@ public class Board {
         Cell cell = cells[point.x][point.y];
         boolean forceReveal = false;
 
-        if (cell.state.contains(State.FLAG))
+        if (cell.containsState(State.FLAG))
             return false;
 
-        if (cell.state.contains(State.REVEALED) && cell.adjacentFlags == cell.adjacentBombs)
+        if (cell.containsState(State.REVEALED) && cell.getAdjacentFlags() == cell.getAdjacentBombs())
             forceReveal = true;
 
-        if (!cell.state.contains(State.REVEALED))
+        if (!cell.containsState(State.REVEALED))
             --fieldsLeft;
 
-        cell.state.add(State.REVEALED);
+        cell.addState(State.REVEALED);
 
-        if (cell.state.contains(State.BOMB) || fieldsLeft == 0) {
+        if (cell.containsState(State.BOMB) || fieldsLeft == 0) {
             setGameOver();
             return true;
         }
 
-        if (cell.adjacentBombs == 0 || forceReveal) {
+        if (cell.getAdjacentBombs() == 0 || forceReveal) {
             for (int i = point.x - 1; i <= point.x + 1; ++i)
                 for (int j = point.y - 1; j <= point.y + 1; ++j) {
                     Point newPoint = new Point(i, j);
                     if (isValidCell(newPoint)) {
                         Cell newCell = cells[i][j];
-                        if (!newCell.state.contains(State.REVEALED))
+                        if (!newCell.containsState(State.REVEALED))
                             reveal(newPoint);
                     }
                 }
@@ -131,23 +121,23 @@ public class Board {
 
         Cell cell = cells[point.x][point.y];
 
-        if (cell.state.contains(State.REVEALED))
+        if (cell.containsState(State.REVEALED))
             return false;
 
         int flagChange;
 
-        if (cell.state.contains(State.FLAG)) {
-            cell.state.remove(State.FLAG);
+        if (cell.containsState(State.FLAG)) {
+            cell.removeState(State.FLAG);
             flagChange = -1;
         } else {
-            cell.state.add(State.FLAG);
+            cell.addState(State.FLAG);
             flagChange = 1;
         }
 
         for (int i = point.x - 1; i <= point.x + 1; ++i)
             for (int j = point.y - 1; j <= point.y + 1; ++j)
                 if (isValidCell(new Point(i, j)))
-                    cells[i][j].adjacentFlags += flagChange;
+                    cells[i][j].increaseAdjacentFlags(flagChange);
 
         return true;
     }
@@ -158,20 +148,20 @@ public class Board {
         for (int i = 0; i < BOARD_SIZE.width; ++i) {
             for (int j = 0; j < BOARD_SIZE.height; ++j) {
                 if (!isGameOver()) {
-                    if (cells[i][j].state.contains(State.REVEALED))
-                        board[i][j] = Character.forDigit(cells[i][j].adjacentBombs, 10);
-                    else if (cells[i][j].state.contains(State.FLAG))
+                    if (cells[i][j].containsState(State.REVEALED))
+                        board[i][j] = Character.forDigit(cells[i][j].getAdjacentBombs(), 10);
+                    else if (cells[i][j].containsState(State.FLAG))
                         board[i][j] = 'F';
                     else
                         board[i][j] = '#';
                 } else {
-                    if (cells[i][j].state.contains(State.BOMB)) {
+                    if (cells[i][j].containsState(State.BOMB)) {
                         if (isGameWon())
                             board[i][j] = 'F';
                         else
                             board[i][j] = 'B';
                     } else
-                        board[i][j] = Character.forDigit(cells[i][j].adjacentBombs, 10);
+                        board[i][j] = Character.forDigit(cells[i][j].getAdjacentBombs(), 10);
                 }
             }
         }

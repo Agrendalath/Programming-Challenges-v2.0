@@ -17,14 +17,14 @@ public class BoardTest {
         Board board = new Board(WIDTH, HEIGHT, BOMBS);
         java.lang.reflect.Field boardFields = Board.class.getDeclaredField("cells");
         boardFields.setAccessible(true);
-        Board.Cell[][] cells = (Board.Cell[][]) boardFields.get(board);
+        Cell[][] cells = (Cell[][]) boardFields.get(board);
 
         for (int i = 0; i < WIDTH; ++i) {
             for (int j = 0; j < HEIGHT; ++j) {
-                if (cells[i][j].state.contains(Board.State.BOMB))
+                if (cells[i][j].containsState(Board.State.BOMB))
                     ++bombCounter;
-                assertFalse("All fields should be not flagged", cells[i][j].state.contains(Board.State.FLAG));
-                assertFalse("All fields should be not revealed", cells[i][j].state.contains(Board.State.REVEALED));
+                assertFalse("All fields should be not flagged", cells[i][j].containsState(Board.State.FLAG));
+                assertFalse("All fields should be not revealed", cells[i][j].containsState(Board.State.REVEALED));
             }
         }
 
@@ -40,18 +40,18 @@ public class BoardTest {
         Board board = new Board(WIDTH, HEIGHT, BOMBS);
         java.lang.reflect.Field boardFields = Board.class.getDeclaredField("cells");
         boardFields.setAccessible(true);
-        Board.Cell[][] cells = (Board.Cell[][]) boardFields.get(board);
+        Cell[][] cells = (Cell[][]) boardFields.get(board);
 
         Point bombPosition = null;
         Point fieldWithNoAdjacentBombs = null;
         Point fieldWithAdjacentBombs = null;
         for (int i = 0; i < WIDTH; ++i)
             for (int j = 0; j < HEIGHT; ++j) {
-                if (bombPosition == null && cells[i][j].state.contains(Board.State.BOMB))
+                if (bombPosition == null && cells[i][j].containsState(Board.State.BOMB))
                     bombPosition = new Point(i, j);
-                else if (fieldWithNoAdjacentBombs == null && cells[i][j].adjacentBombs == 0)
+                else if (fieldWithNoAdjacentBombs == null && cells[i][j].getAdjacentBombs() == 0)
                     fieldWithNoAdjacentBombs = new Point(i, j);
-                else if (fieldWithAdjacentBombs == null && cells[i][j].adjacentBombs != 0)
+                else if (fieldWithAdjacentBombs == null && cells[i][j].getAdjacentBombs() != 0)
                     fieldWithAdjacentBombs = new Point(i, j);
             }
 
@@ -61,7 +61,7 @@ public class BoardTest {
 
         for (int i = 0; i < WIDTH; ++i)
             for (int j = 0; j < HEIGHT; ++j)
-                if (cells[i][j].state.contains(Board.State.REVEALED))
+                if (cells[i][j].containsState(Board.State.REVEALED))
                     ++numberOfRevealedFields;
 
         assertEquals("There should be only one field revealed.", 1, numberOfRevealedFields);
@@ -76,12 +76,12 @@ public class BoardTest {
         Board board = new Board(WIDTH, HEIGHT, BOMBS);
         java.lang.reflect.Field boardFields = Board.class.getDeclaredField("cells");
         boardFields.setAccessible(true);
-        Board.Cell[][] cells = (Board.Cell[][]) boardFields.get(board);
+        Cell[][] cells = (Cell[][]) boardFields.get(board);
 
         Point firstBomb = null;
         for (int i = 0; i < WIDTH && firstBomb == null; ++i)
             for (int j = 0; j < HEIGHT && firstBomb == null; ++j)
-                if (cells[i][j].state.contains(Board.State.BOMB))
+                if (cells[i][j].containsState(Board.State.BOMB))
                     firstBomb = new Point(i, j);
 
         board.reveal(firstBomb);
