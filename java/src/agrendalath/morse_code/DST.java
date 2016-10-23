@@ -14,7 +14,6 @@ class DST implements Serializable {
     }
 
     private void addKey(char key, String code) {
-        key = Character.toUpperCase(key);
         if (code.length() == 0)
             throw new IllegalArgumentException("Code cannot be empty.");
 
@@ -32,7 +31,7 @@ class DST implements Serializable {
                 currentNode = currentNode.getRight();
             }
         }
-        currentNode.setValue(key);
+        currentNode.setValue(Character.toUpperCase(key));
     }
 
     private char getKey(String code) {
