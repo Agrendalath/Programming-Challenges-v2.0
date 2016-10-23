@@ -1,26 +1,35 @@
 package agrendalath.rock_paper_scissors;
 
-import java.util.EnumSet;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 class RPS {
-    private static final Map<FigureInterface, EnumSet<? extends FigureInterface>> relations = new HashMap<>();
-
-    enum Figures implements FigureInterface {Rock, Paper, Scissors}
+    private static final Map<FigureInterface, Set<? extends FigureInterface>> relations = new HashMap<>();
 
     RPS() {
         initialize();
     }
 
-    Map<FigureInterface, EnumSet<? extends FigureInterface>> getRelations() {
+    Map<FigureInterface, Set<? extends FigureInterface>> getRelations() {
         return relations;
     }
 
+    static FigureInterface<?> getFigure(String name) {
+        return FigureInterface.getEnum(name, Figures.class);
+    }
+
     void initialize() {
-        relations.put(Figures.Rock, EnumSet.of(Figures.Scissors));
-        relations.put(Figures.Paper, EnumSet.of(Figures.Rock));
-        relations.put(Figures.Scissors, EnumSet.of(Figures.Paper));
+        relations.put(
+                getFigure("Rock"),
+                new HashSet<>(Collections.singletonList(getFigure("Scissors")))
+        );
+        relations.put(
+                getFigure("Paper"),
+                new HashSet<>(Collections.singletonList(getFigure("Rock")))
+        );
+        relations.put(
+                getFigure("Scissors"),
+                new HashSet<>(Collections.singletonList(getFigure("Paper")))
+        );
     }
 
     /**

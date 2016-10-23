@@ -11,22 +11,22 @@ public class RPSTest {
         RPS rps = new RPS();
 
         // Rock
-        FigureInterface first = RPS.Figures.Rock;
-        FigureInterface second = RPS.Figures.Scissors;
+        FigureInterface first = RPS.getFigure("Rock");
+        FigureInterface second = RPS.getFigure("Scissors");
         assertTrue(first + " should beat " + second, rps.fight(first, second));
-        second = RPS.Figures.Paper;
+        second = RPS.getFigure("Paper");
         assertFalse(first + " should not beat " + second, rps.fight(first, second));
 
         // Scissors
-        first = RPS.Figures.Scissors;
+        first = RPS.getFigure("Scissors");
         assertTrue(first + " should beat " + second, rps.fight(first, second));
-        second = RPS.Figures.Rock;
+        second = RPS.getFigure("Rock");
         assertFalse(first + " should not beat " + second, rps.fight(first, second));
 
         // Paper
-        first = RPS.Figures.Paper;
+        first = RPS.getFigure("Paper");
         assertTrue(first + " should beat " + second, rps.fight(first, second));
-        second = RPS.Figures.Scissors;
+        second = RPS.getFigure("Scissors");
         assertFalse(first + " should not beat " + second, rps.fight(first, second));
     }
 }
