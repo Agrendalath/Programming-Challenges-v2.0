@@ -13,8 +13,12 @@ class RPS {
         return relations;
     }
 
-    static FigureInterface<?> getFigure(String name) {
+    FigureInterface getFigure(String name) {
         return FigureInterface.getEnum(name, Figures.class);
+    }
+
+    FigureInterface[] getAllFigures() {
+        return FigureInterface.getAllEnums(Figures.class);
     }
 
     void initialize() {
@@ -35,9 +39,13 @@ class RPS {
     /**
      * @param first  The first figure.
      * @param second The second figure.
-     * @return Returns if the first figure beats the second one.
+     * @return Returns 0 in case of draw (figures are the same).
+     * Returns 1 if the first figure beats the second one.
+     * Returns -1 if the second figure beats the first one.
      */
-    boolean fight(FigureInterface first, FigureInterface second) {
-        return relations.get(first).contains(second);
+    int fight(FigureInterface first, FigureInterface second) {
+        if (first == second)
+            return 0;
+        return relations.get(first).contains(second) ? 1 : -1;
     }
 }

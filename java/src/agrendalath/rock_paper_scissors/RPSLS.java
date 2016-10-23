@@ -6,8 +6,14 @@ import java.util.Map;
 import java.util.Set;
 
 class RPSLS extends RPS {
-    static FigureInterface<?> getFigure(String name) {
+    @Override
+    FigureInterface getFigure(String name) {
         return FigureInterface.getEnum(name, Figures.class, ExtendedFigures.class);
+    }
+
+    @Override
+    FigureInterface[] getAllFigures() {
+        return FigureInterface.getAllEnums(Figures.class, ExtendedFigures.class);
     }
 
     @Override

@@ -2,31 +2,50 @@ package agrendalath.rock_paper_scissors;
 
 import org.junit.Test;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 
 public class RPSTest {
+    private RPS rps = new RPS();
+
+    private void assertWins(FigureInterface first, FigureInterface second) {
+        assertEquals(first + " should beat " + second, 1, rps.fight(first, second));
+    }
+
+    private void assertLoses(FigureInterface first, FigureInterface second) {
+        assertEquals(first + " should not beat " + second, -1, rps.fight(first, second));
+    }
+
+    private void assertDraws(FigureInterface first, FigureInterface second) {
+        assertEquals(first + " should not beat " + second, 0, rps.fight(first, second));
+    }
+
     @Test
     public void fight() throws Exception {
-        RPS rps = new RPS();
-
         // Rock
-        FigureInterface first = RPS.getFigure("Rock");
-        FigureInterface second = RPS.getFigure("Scissors");
-        assertTrue(first + " should beat " + second, rps.fight(first, second));
-        second = RPS.getFigure("Paper");
-        assertFalse(first + " should not beat " + second, rps.fight(first, second));
+        FigureInterface first = rps.getFigure("Rock");
+        FigureInterface second = rps.getFigure("Rock");
+        assertDraws(first, second);
+        second = rps.getFigure("Scissors");
+        assertWins(first, second);
+        second = rps.getFigure("Paper");
+        assertLoses(first, second);
 
         // Scissors
-        first = RPS.getFigure("Scissors");
-        assertTrue(first + " should beat " + second, rps.fight(first, second));
-        second = RPS.getFigure("Rock");
-        assertFalse(first + " should not beat " + second, rps.fight(first, second));
+        first = rps.getFigure("Scissors");
+        second = rps.getFigure("Scissors");
+        assertDraws(first, second);
+        second = rps.getFigure("Paper");
+        assertWins(first, second);
+        second = rps.getFigure("Rock");
+        assertLoses(first, second);
 
         // Paper
-        first = RPS.getFigure("Paper");
-        assertTrue(first + " should beat " + second, rps.fight(first, second));
-        second = RPS.getFigure("Scissors");
-        assertFalse(first + " should not beat " + second, rps.fight(first, second));
+        first = rps.getFigure("Paper");
+        second = rps.getFigure("Paper");
+        assertDraws(first, second);
+        second = rps.getFigure("Rock");
+        assertWins(first, second);
+        second = rps.getFigure("Scissors");
+        assertLoses(first, second);
     }
 }
