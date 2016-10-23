@@ -31,6 +31,7 @@ public class MorseCode {
                     break;
                 default:
                     System.out.println("Wrong option.");
+                    break;
             }
         }
     }

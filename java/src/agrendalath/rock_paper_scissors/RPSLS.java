@@ -4,6 +4,10 @@ import java.util.Arrays;
 import java.util.HashSet;
 
 class RPSLS extends RPS {
+    RPSLS() {
+        initialize();
+    }
+
     @Override
     FigureInterface getFigure(String name) {
         return FigureInterface.getEnum(name, Figures.class, ExtendedFigures.class);
@@ -14,8 +18,7 @@ class RPSLS extends RPS {
         return FigureInterface.getAllEnums(Figures.class, ExtendedFigures.class);
     }
 
-    @Override
-    void initialize() {
+    private void initialize() {
         addRelation(
                 getFigure("Rock"),
                 new HashSet<>(Arrays.asList(

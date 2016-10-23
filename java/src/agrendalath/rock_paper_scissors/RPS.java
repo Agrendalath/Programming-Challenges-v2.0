@@ -21,7 +21,7 @@ class RPS {
         relations.put(figure, set);
     }
 
-    void initialize() {
+    private void initialize() {
         addRelation(
                 getFigure("Rock"),
                 new HashSet<>(Collections.singletonList(getFigure("Scissors")))
