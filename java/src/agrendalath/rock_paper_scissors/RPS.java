@@ -3,14 +3,10 @@ package agrendalath.rock_paper_scissors;
 import java.util.*;
 
 class RPS {
-    private static final Map<FigureInterface, Set<? extends FigureInterface>> relations = new HashMap<>();
+    private final Map<FigureInterface, Set<? extends FigureInterface>> relations = new HashMap<>();
 
     RPS() {
         initialize();
-    }
-
-    Map<FigureInterface, Set<? extends FigureInterface>> getRelations() {
-        return relations;
     }
 
     FigureInterface getFigure(String name) {
@@ -21,16 +17,20 @@ class RPS {
         return FigureInterface.getAllEnums(Figures.class);
     }
 
+    void addRelation(FigureInterface figure, Set<? extends FigureInterface> set) {
+        relations.put(figure, set);
+    }
+
     void initialize() {
-        relations.put(
+        addRelation(
                 getFigure("Rock"),
                 new HashSet<>(Collections.singletonList(getFigure("Scissors")))
         );
-        relations.put(
+        addRelation(
                 getFigure("Paper"),
                 new HashSet<>(Collections.singletonList(getFigure("Rock")))
         );
-        relations.put(
+        addRelation(
                 getFigure("Scissors"),
                 new HashSet<>(Collections.singletonList(getFigure("Paper")))
         );

@@ -2,8 +2,6 @@ package agrendalath.rock_paper_scissors;
 
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
 
 class RPSLS extends RPS {
     @Override
@@ -18,36 +16,35 @@ class RPSLS extends RPS {
 
     @Override
     void initialize() {
-        Map<FigureInterface, Set<? extends FigureInterface>> relations = getRelations();
-        relations.put(
+        addRelation(
                 getFigure("Rock"),
                 new HashSet<>(Arrays.asList(
                         getFigure("Scissors"),
                         getFigure("Lizard"))
                 )
         );
-        relations.put(
+        addRelation(
                 getFigure("Paper"),
                 new HashSet<>(Arrays.asList(
                         getFigure("Rock"),
                         getFigure("Spock"))
                 )
         );
-        relations.put(
+        addRelation(
                 getFigure("Scissors"),
                 new HashSet<>(Arrays.asList(
                         getFigure("Paper"),
                         getFigure("Lizard"))
                 )
         );
-        relations.put(
+        addRelation(
                 getFigure("Lizard"),
                 new HashSet<>(Arrays.asList(
                         getFigure("Paper"),
                         getFigure("Spock"))
                 )
         );
-        relations.put(
+        addRelation(
                 getFigure("Spock"),
                 new HashSet<>(Arrays.asList(
                         getFigure("Rock"),

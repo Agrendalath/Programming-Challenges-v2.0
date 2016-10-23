@@ -15,7 +15,7 @@ public class RockPaperScissors {
             game = new RPS();
 
         System.out.println("Choose your destiny:");
-        for (int i=0; i<game.getAllFigures().length; ++i) {
+        for (int i = 0; i < game.getAllFigures().length; ++i) {
             System.out.println(i + ". " + game.getAllFigures()[i]);
         }
         int chosenFigure = scanner.nextInt();
@@ -37,6 +37,9 @@ public class RockPaperScissors {
                 break;
             case 1:
                 System.out.println("win.");
+                break;
+            default:
+                throw new IllegalStateException();
         }
     }
 }
