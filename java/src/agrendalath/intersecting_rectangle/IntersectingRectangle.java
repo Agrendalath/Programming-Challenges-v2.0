@@ -11,7 +11,6 @@ public class IntersectingRectangle {
 
     private static long getIntersectingRectangle(Rectangle rectangle1, Rectangle rectangle2) {
         Rectangle intersecting = rectangle1.intersection(rectangle2);
-        System.out.println(intersecting);
         if (intersecting.width < 0 || intersecting.height < 0)
             return 0;
 
